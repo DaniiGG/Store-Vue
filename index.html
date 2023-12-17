@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Grid</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@247&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/vue@next"></script>
+
+
+
+</head>
+<body id="app">
+    <div id="wrapper">
+        <header id="header">
+			<div class="section section1"><a id="menu_on">
+                
+                <span class="barras"></span>
+                <span class="barras"></span>
+                <span class="barras"></span>
+            	
+            </a>
+            <nav>	
+                <ul>
+                    <li><a href="index.html" >Home</a></li>
+                    <li><a @click="selectedCategory = 'men\'s clothing'">Ropa de Hombre</a></li>
+                    <li><a @click="selectedCategory = 'women\'s clothing'">Ropa de mujer</a></li>
+                    <li><a @click="selectedCategory = 'jewelery'">Joyería</a></li>
+                    <li><a @click="selectedCategory = 'electronics'">Tecnología</a></li>
+                    <li><a @click="toggleCart">Carrito</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+        <div class="section section2"><a href="index.html"><img src="imagenes/ddedaniel.jpg"></a></div>
+        <div class="section section3">
+          <div id="search-button">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            &nbsp;Buscar
+          </div>
+          <a href="formulario.html">
+          <div id="login">
+            <i class="fa-regular fa-user"></i>
+            &nbsp;Iniciar sesión
+          </div>
+        </a>
+          <a @click="toggleCart" id="cesta">
+            <i class="fa-solid fa-bag-shopping"></i>
+            &nbsp;Cesta
+            
+          </a>
+        </div>
+        
+            
+		 </header>
+    </div>
+            <main>
+              <section class="tipo-ropa">
+              <a @click="selectedCategory = 'men\'s clothing'">
+                <div class="parte hombre">
+                  <figcaption class="etiqueta"><h1>Ropa de hombre</h1></figcaption>
+                  <div><img src="imagenes/man-1866572_1280.jpg" alt="Imagen de mujer"></div>
+                </div>
+              </a>
+                <a @click="selectedCategory = 'women\'s clothing'">
+                <div class="parte mujer">
+                  <figcaption class="etiqueta"><h1>Ropa de mujer</h1></figcaption>
+                  <div><img src="imagenes/woman-6496881_1280.jpg" alt="Imagen de mujer"></div>
+                </div>
+              </a>
+
+              <a @click="selectedCategory = 'jewelery'">
+                <div class="parte joyas">
+                  <figcaption class="etiqueta"><h1>Joyería</h1></figcaption>
+                  <div><img src="imagenes/joyas.jpg" alt="Imagen de joyeria"></div>
+                </div>
+              </a>
+
+              <a @click="selectedCategory = 'electronics'">
+                <div class="parte tecno">
+                  <figcaption class="etiqueta"><h1>Tecnología</h1></figcaption>
+                  <div><img src="imagenes/woman-791185_1280.jpg" alt="Imagen de tecnología"></div>
+                </div>
+              </a>
+              </section>
+
+              
+              
+              
+
+            <section id="container-slider">	
+                <a href="javascript: funcionEjecutar('anterior');" class="arrowPrev"><i class="fas fa-chevron-circle-left"></i></a>
+                <a href="javascript: funcionEjecutar('siguiente');" class="arrowNext"><i class="fas fa-chevron-circle-right"></i></a>
+                <ul class="listslider">
+                  <li><a itlist="itList_0" class="item-select-slid"></a></li>
+                  <li><a itlist="itList_1"></a></li>
+                  <li><a itlist="itList_2"></a></li>
+                </ul>
+                <ul id="slider">
+                  <li style="background-image: url('imagenes/01.jpg'); z-index:0; opacity: 1;">
+                    <div class="content_slider" >
+                      <div>
+                        <h2>Temporada de invierno</h2>
+                    <p>¡Ya ha llegado la navidad, <br>y con ella nuestra temporada de invierno!</p><br>
+                    <a href="" target="_blank" class="btnSlider">¡Echa un vistazo!</a>
+                  </div>
+                    </div>
+                  </li>
+                  <li style="background-image: url('imagenes/02.jpg'); ">
+                    <div class="content_slider" >
+                      <div>
+                        <h2>Maravillosos descuentos</h2>
+                    <p>¡Estás de suerte!, echa un vistazo a estos impresionantes descuentos</p><br>
+                    <a href="" target="_blank" class="btnSlider">¡Echa un vistazo!</a>
+                  </div>
+                    </div>
+                  </li>
+                  <li style="background-image: url('imagenes/03.jpg'); ">
+                    <div class="content_slider" >
+                      <div>
+                        <h2>Regala elegancia</h2>
+                    <p>Esta navidad haz el mejor regalo de todos</p>
+                    <a href="" target="_blank" class="btnSlider">¡Echa un vistazo!</a>
+                  </div>
+                    </div>
+                  </li>
+               </ul>
+             </section>
+
+
+             <section class="banner">
+              <div id="banner-content">
+              <h2>¡Descuentos Especiales!</h2>
+              <p>Aprovecha nuestros descuentos antes de que se agoten</p>
+              <p><a href="#" class="btn-banner">Ver ofertas</a></p>
+            </div>
+            </section>
+
+            <div v-if="products.length > 0">
+              <div v-if="!selectedProduct">
+                <h1>Todos los productos</h1>
+                <div v-if="loading" class="loader-wrapper">
+                  <div class="loader"></div>
+                </div>
+                <div class="custom-select">
+                <select class="tallas" @change="sortProducts" v-model="sortOrder">
+                  <option value="name_asc" >Nombre (Ascendente)</option>
+                  <option value="name_desc">Nombre (Descendente)</option>
+                  <option value="price_asc">Precio (Ascendente)</option>
+                  <option value="price_desc">Precio (Descendente)</option>
+              </select>
+            </div>
+
+                <section class="prendas">
+                <div class="prenda" v-for="product in products" :key="product.id" class="product" @click="showProductDetails(product)">
+                  <img :src="product.image" :alt="product.title">
+                  <h3>{{ product.title }}</h3>
+                  <p>{{ product.price.toFixed(2) }} €</p>
+                </div>
+              </section>
+              </div>
+            </div>
+
+             <!-- Productos filtrados -->
+            <div v-if="selectedCategory" class="filtered-products">
+              
+              <h2>{{ selectedCategory }}</h2>
+              <div class="custom-select">
+                <select class="tallas" @change="sortProducts" v-model="sortOrder">
+                  <option value="name_asc">Nombre (Ascendente)</option>
+                  <option value="name_desc">Nombre (Descendente)</option>
+                  <option value="price_asc">Precio (Ascendente)</option>
+                  <option value="price_desc">Precio (Descendente)</option>
+              </select>
+            </div>
+              <div v-if="loading" class="loader-wrapper">
+                <div class="loader"></div>
+              </div>
+              <section>
+              <div v-if="selectedCategory"  class="prenda" v-for="product in filteredProducts" :key="product.id" @click="showProductDetails(product)">
+                  <img :src="product.image" :alt="product.title">
+                  <h3>{{ product.title }}</h3>
+                  <p>{{ product.price.toFixed(2) }} €</p>
+              </div>
+              
+            </section>
+            <button class="enter" id="volver" @click="closeCategoryDetails">Cerrar</button>
+            </div>
+
+
+            <!-- Detalles -->
+            <div v-if="selectedProduct" >
+              <section class="product-details active">
+                <div v-if="loading" class="loader-wrapper">
+                  <div class="loader"></div>
+                </div>
+                <div>
+              <img :src="selectedProduct.image" :alt="selectedProduct.title" />
+                </div>
+              <div>
+              <h2>{{ selectedProduct.title }}</h2><br>
+              <p>{{ selectedProduct.description }}</p><br>
+              <p><b>Precio:</b> ${{ selectedProduct.price.toFixed(2) }}</p><br>
+              <ul>
+                  <li><b>Unidades restantes:</b> {{ selectedProduct.rating.count }}</li><br>
+                  <li><b>Calificación del producto:</b> {{ selectedProduct.rating.rate }}</li><br>
+              </ul>
+            <br>
+            <label for="talla">Selecciona tu talla:</label><br>
+            <select id="talla" name="talla" class="tallas" v-model="selectedProduct.selectedSize">
+                <option value="XS">Extra Pequeña (XS)&nbsp;</option>
+                <option value="S" selected>Pequeña (S)&nbsp;</option>
+                <option value="M">Mediana (M)&nbsp;</option>
+                <option value="L">Grande (L)&nbsp;</option>
+                <option value="XL">Extra Grande (XL)&nbsp;</option>
+              </select><br><br>
+              <button class="enter" @click="buyProduct(selectedProduct)">Añadir al carrito</button><br><br>
+              <p>{{ addedToCartMessage }}</p>
+              <button class="enter" id="volver" @click="closeProductDetails">Cerrar</button>
+              <br>
+            </div>
+            </section>
+          </div>
+
+          <!--CARRITO-->
+            <section class="cart-container" v-if="showCart">
+              <div v-if="loading" class="loader-wrapper">
+                    <div class="loader"></div>
+                  </div>
+              <div class="cart">
+                  <h2>Carrito</h2><br><br>
+                  <div id="vacio" v-if="cart.length === 0">
+                      <p>El carrito está vacío.</p><br>
+                      <button class="enter" @click="toggleCart">Sigue comprando</button>
+                  </div>
+                  <div v-else>
+                    <h3>Total de artículos en el carrito: {{ cart.length }}</h3><br>
+                      <div v-for="(item, index) in cart" :key="index" class="cart-item">
+                        <div>
+                          <h3>{{ item.title }}</h3>
+                          <img :src="item.image" :alt="item.title" />
+                          <p>Talla seleccionada: {{ selectedProduct.selectedSize }}</p><br><br>
+                          <button @click="removeFromCart(index)">Eliminar</button>
+                        </div>
+                        <div>
+                          <p>Precio: ${{ item.price }}</p><br>
+                          <p>Precio Total: ${{ item.totalPrice.toFixed(2) }}</p><br>
+                        
+                              <button  @click="decreaseQuantity(index)"> - </button>
+                              <span>&nbsp;{{ item.cantidad }}&nbsp;</span>
+                              <button  @click="increaseQuantity(index)"> + </button>
+                          </div>
+                      </div>
+                      <b><p id="total-price">Total: ${{ totalCartPrice.toFixed(2) }}</p></b><br>
+                      
+                      <button id="total-price" class="enter">Comprar</button>
+                  </div>
+              </div>
+              <button id="volver2" class="enter" @click="toggleCart">Volver</button>
+            </section>
+
+             
+             
+    </main>
+    <footer class="footer">
+      <div class="footer-main">
+        <div class="footer-section">
+          <h3>Ayuda</h3>
+          <p>Preguntas frecuentes</p>
+          <p>Cambios y devoluciones</p>
+          <p>Condiciones de compra</p>
+          <p>Plan de fidelización</p>
+        </div>
+        <div class="footer-section">
+          <h3>Nosotros</h3>
+          <p>Quienes somos</p>
+          <p>Política de cookies</p>
+          <p>Política de privacidad</p>
+        </div>
+        <div class="footer-section">
+          <h3>Legal</h3>
+          <p>Aviso legal</p>
+          <p>Términos y condiciones</p>
+          <p>Protección de datos</p>
+        </div>
+        <div class="footer-section">
+          <h3>Métodos de Pago</h3>
+          <i class="fa-brands fa-cc-mastercard fa-2xl"></i>
+          <i class="fa-brands fa-cc-visa fa-2xl"></i>
+          <i class="fa-brands fa-paypal fa-2xl"></i>
+          <i class="fa-brands fa-google-pay fa-2xl"></i>
+        </div>
+      </div>
+      <div class="footer-secondary">
+        <div class="footer-subsection1">
+          <h3 id="name-footer">Nombre</h3>
+          <h4>de la tienda</h4>
+        </div>
+        <div class="footer-subsection2">
+          <h4>Daniel Escobar || 2023. Todos los derechos reservados.</h4>
+        </div>
+        <div class="footer-subsection3">
+          <i class="fa-brands fa-instagram fa-2xl"></i>
+          <i class="fa-brands fa-facebook fa-2xl"></i>
+          <i class="fa-brands fa-twitter fa-2xl"></i>
+          <i class="fa-brands fa-tiktok fa-2xl"></i>
+          <i class="fa-brands fa-youtube fa-2xl"></i>
+        </div>
+      </div>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <script src="https://kit.fontawesome.com/8fd2dbd2a5.js" crossorigin="anonymous"></script>
+    <script src="hamburguesa.js"></script>
+    <script src="carrusel.js"></script>
+    <script>
+      
+        const app = Vue.createApp({
+            data() {
+                return {
+                    products: [],
+                    selectedCategory: '',
+                    selectedProduct: null,
+                    addedToCartMessage: '',
+                    cart: [],
+                    showCart: false,
+                    loading: false
+                };
+            },
+            mounted() { 
+              this.fetchProducts(); 
+
+              
+            },
+            computed: {
+                filteredProducts() {
+                return this.products.filter(product => {
+                    if (this.selectedCategory === "men's clothing" || this.selectedCategory === "women's clothing") {
+                        return product.category === this.selectedCategory;
+                    } else {
+                        return !this.selectedCategory || product.category === this.selectedCategory;
+                    }
+                });
+            },
+            totalCartPrice() {
+                return this.cart.reduce((total, item) => total + item.totalPrice, 0);
+            },
+            },
+            watch: {
+                selectedCategory() {
+                    this.fetchProducts();
+                },
+            },
+            methods: {
+              fetchProducts() {
+                  this.loading = true;
+                  let apiUrl = 'https://fakestoreapi.com/products';
+                  
+                  fetch(apiUrl)
+                      .then(response => response.json())
+                      .then(data => {
+                          this.loading = false;
+                          if (this.sortOrder === 'name') {
+                              this.products = this.sortByName(data);
+                          } else if (this.sortOrder === 'price') {
+                              this.products = this.sortByPrice(data);
+                          } else {
+                              this.products = data;
+                          }
+                      })
+                      .catch(error => {
+                          console.error('Error fetching products:', error);
+                          this.loading = false;
+                      });
+              },
+              sortProducts() {
+                this.loading = true;
+                let sortedProducts = [];
+                switch (this.sortOrder) {
+                    case 'name_asc':
+                        sortedProducts = this.sortByName(this.products, 'asc');
+                        break;
+                    case 'name_desc':
+                        sortedProducts = this.sortByName(this.products, 'desc');
+                        break;
+                    case 'price_asc':
+                        sortedProducts = this.sortByPrice(this.products, 'asc');
+                        break;
+                    case 'price_desc':
+                        sortedProducts = this.sortByPrice(this.products, 'desc');
+                        break;
+                    default:
+                        sortedProducts = this.products;
+                        break;
+                }
+                this.products = sortedProducts;
+                this.loading = false;
+              },
+              sortByName(data, direction) {
+                  return data.slice().sort((a, b) => {
+                      const nameA = a.title.toUpperCase();
+                      const nameB = b.title.toUpperCase();
+                      return direction === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+                  });
+              },
+              sortByPrice(data, direction) {
+                  return data.slice().sort((a, b) => {
+                      return direction === 'asc' ? a.price - b.price : b.price - a.price;
+                  });
+              },
+                          
+
+                
+                showProductDetails(product) {
+                    this.selectedProduct = product;
+                    this.addedToCartMessage = '';
+                },
+                closeProductDetails() {
+                    this.selectedProduct = null;
+                },
+                closeCategoryDetails() {
+                    this.selectedCategory = null;
+                },
+              
+                buyProduct(product) {
+                    let found = false;
+                    this.cart.forEach((item) => {
+                        if (item.title === product.title) {
+                            found = true;
+                            item.cantidad++;
+                        }
+                    });
+
+                    if (!found) {
+                        this.addedToCartMessage = "El producto se añadió al carrito: " + product.title;
+                        this.cart.push({
+                            title: product.title,
+                            image: product.image,
+                            price: product.price,
+                            cantidad: 1,
+                            totalPrice: product.price,
+                            size: product.selectedSize
+                            
+                        });
+
+                    }
+                    localStorage.setItem('cartItems', JSON.stringify(this.cart));
+                },
+
+                
+                toggleCart() {
+                    this.showCart = !this.showCart;
+                },
+                increaseQuantity(index) {
+                    this.cart[index].cantidad++;
+                    this.cart[index].totalPrice = this.cart[index].price * this.cart[index].cantidad;
+                   
+                },
+
+                decreaseQuantity(index) {
+                    if (this.cart[index].cantidad > 1) {
+                        this.cart[index].cantidad--;
+                        this.cart[index].totalPrice = this.cart[index].price * this.cart[index].cantidad;
+                        
+                    }
+                },
+               
+                removeFromCart(index) {
+                    this.cart.splice(index, 1);
+                    localStorage.setItem('cartItems', JSON.stringify(this.cart));
+                }
+
+            },
+            
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+</html>
